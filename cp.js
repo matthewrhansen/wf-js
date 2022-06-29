@@ -1,4 +1,4 @@
-let copyButton = document.getElementsByClassName(“copy-button”);
+let copyButton = document.getElementsByID(“copy-button”);
 let data;
 
 const codeSnippet = JSON.parse(document.querySelector(".snippet").textContent);
