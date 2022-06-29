@@ -1,4 +1,4 @@
-const copyButton = document.getElementByClassName("copy-button");
+let copyButton = document.getElementById("copy-button");
 let data;
 
 const codeSnippet = JSON.parse(document.querySelector(".snippet").textContent);
@@ -26,4 +26,4 @@ function changeButtonText() {
     copyButton.innerText = "Copy template";
     // copyButton.innerHTML = `<img src="https://assets-global.website-files.com/6132770a5e2efb2a37b68270/6132770a5e2efbb78db682e2_copy-icon.svg" loading="lazy"><span>Click to Copy!`
   }, 3000);
-} 
+}
