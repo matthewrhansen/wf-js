@@ -1,29 +1,20 @@
-let copyButton = document.getElementsByClassName("copy-button");
-let data;
-
-const codeSnippet = JSON.parse(document.querySelector(".snippet").textContent);
-
-/*copyButton.addEventListener('copy', (event) => {
-		event.clipboardData.setData('application/json',codeSnippet);
-    console.log('copied to cb', JSON.parse(codeSnippet));
-    event.preventDefault();
-}); */
-
-document.addEventListener("copy", (event) => {
-  event.clipboardData.setData("application/json", JSON.stringify(codeSnippet));
-  event.preventDefault();
-  console.log("copied to cb", codeSnippet);
+$(".copy-button").each (function () { // for each copy button
+    $(this).on("click", function () {  
+        let codeSnippet = JSON.parse($(this).parent().find(".snippet").text()); // get the code snippet from the parent div
+        console.log("codeSnippet", codeSnippet); // log the code snippet
+        let copyButton = $(this); // get the copy button
+        let data = JSON.stringify(codeSnippet); // stringify the code snippet   
+        console.log("data", data); // log the data
+        document.addEventListener("copy", (event) => { // add the event listener
+        event.clipboardData.setData("application/json", data); // set the data to be copied to the clipboard
+        event.preventDefault(); // prevent the default copy behavior
+        console.log("copied to cb", data);  // log the data
+        copyButton.text("Copied to clipboard"); // change the button text
+        setTimeout(() => {
+            copyButton.text("Copy"); // change the button text back to the original
+        }, 3000);
+        });
+        document.execCommand("copy"); // copy the data to the clipboard
+    }
+    );
 });
-
-copyButton.onclick = function () {
-  document.execCommand("copy");
-  copyButton.innerText = "Copied to clipboard";
-  changeButtonText();
-};
-
-function changeButtonText() {
-  setTimeout(() => {
-    copyButton.innerText = "Copy template";
-    // copyButton.innerHTML = `<img src="https://assets-global.website-files.com/6132770a5e2efb2a37b68270/6132770a5e2efbb78db682e2_copy-icon.svg" loading="lazy"><span>Click to Copy!`
-  }, 3000);
-}
