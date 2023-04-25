@@ -1,5 +1,3 @@
-let selectedButton = null;
-
 $(".copy-button").each(function() {
   $(this).on("click", function() {
     let codeSnippet = JSON.parse($(this).parent().find(".snippet").text());
@@ -12,20 +10,14 @@ $(".copy-button").each(function() {
       event.preventDefault();
       console.log("copied to cb", data);
       copyButton.text("Copied to clipboard");
-      if (selectedButton) {
-        setTimeout(function() {
-          selectedButton.text("Copy");
-        }, 3000);
-      }
-      selectedButton = copyButton;
       setTimeout(function() {
         copyButton.text("Copy");
-        if (selectedButton === copyButton) {
-          selectedButton = null;
-        }
-        window.getSelection().removeAllRanges();
+        copyButton.off("mouseleave"); // remove the mouseleave event listener
       }, 3000);
     });
     document.execCommand("copy");
+    $(".copy-button").not(copyButton).on("mouseleave", function() {
+      $(this).text("Copy"); // reset the text of all other copy buttons
+    });
   });
 });
