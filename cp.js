@@ -1,10 +1,7 @@
-let selectedButton = null; // initialize variable to keep track of the currently selected button
+let selectedButton = null;
 
 $(".copy-button").each(function() {
   $(this).on("click", function() {
-    if (selectedButton !== null) {
-      selectedButton.text("Copy"); // reset the previously selected button text
-    }
     let codeSnippet = JSON.parse($(this).parent().find(".snippet").text());
     console.log("codeSnippet", codeSnippet);
     let copyButton = $(this);
@@ -15,10 +12,17 @@ $(".copy-button").each(function() {
       event.preventDefault();
       console.log("copied to cb", data);
       copyButton.text("Copied to clipboard");
-      selectedButton = copyButton; // set the currently selected button
+      if (selectedButton) {
+        setTimeout(function() {
+          selectedButton.text("Copy");
+        }, 3000);
+      }
+      selectedButton = copyButton;
       setTimeout(function() {
         copyButton.text("Copy");
-        selectedButton = null; // clear the currently selected button
+        if (selectedButton === copyButton) {
+          selectedButton = null;
+        }
         window.getSelection().removeAllRanges();
       }, 3000);
     });
