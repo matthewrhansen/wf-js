@@ -7,7 +7,7 @@ $(document).on("click", ".copy-button", function() {
   let data = JSON.stringify(codeSnippet);
   console.log("data", data);
   
-  if (lastClickedButton) {
+  if (lastClickedButton && lastClickedButton !== copyButton) {
     lastClickedButton.text("Copy");
   }
   lastClickedButton = copyButton;
