@@ -1,4 +1,4 @@
-let lastClickedButton; // create a variable to keep track of the last clicked button
+let lastClickedButton;
 
 $(document).on("click", ".copy-button", function() {
   let codeSnippet = JSON.parse($(this).parent().find(".snippet").text());
@@ -7,7 +7,6 @@ $(document).on("click", ".copy-button", function() {
   let data = JSON.stringify(codeSnippet);
   console.log("data", data);
   
-  // Only change text of last clicked button
   if (lastClickedButton) {
     lastClickedButton.text("Copy");
   }
@@ -23,7 +22,9 @@ function copyToClipboard(data, copyButton) {
     console.log("copied to cb", data);
     copyButton.text("Copied to clipboard");
     setTimeout(() => {
-      copyButton.text("Copy");
+      if (copyButton === lastClickedButton) {
+        copyButton.text("Copy");
+      }
     }, 3000);
   });
   document.execCommand("copy");
