@@ -3,8 +3,8 @@ let selectedButton = null;
 $(".copy-button").on("click", function() {
   const button = $(this);
   const snippet = button.closest(".code-snippet").find(".snippet").text().trim();
-  const data = JSON.stringify(snippet);
-  navigator.clipboard.writeText(data).then(function() {
+  const data = new Blob([snippet], { type: "text/plain" });
+  navigator.clipboard.write([new ClipboardItem({ "text/plain": data })]).then(function() {
     console.log("copied to clipboard", data);
     button.text("Copied!");
     if (selectedButton && selectedButton !== button) {
