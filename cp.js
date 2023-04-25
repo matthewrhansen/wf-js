@@ -1,21 +1,15 @@
-function copyToClipboard(button) {
-  let codeSnippet = JSON.parse(button.closest('.code-snippet').querySelector('.snippet').textContent.trim());
-  let data = JSON.stringify(codeSnippet);
-  console.log("data", data);
-  
+$(".copy-button").on("click", function() {
+  const snippet = $(this).closest(".code-snippet").find(".snippet").text().trim();
+  const data = JSON.stringify(snippet);
   navigator.clipboard.writeText(data).then(function() {
     console.log("copied to clipboard", data);
-    button.textContent = "Copied!";
-    setTimeout(function() {
-      button.textContent = "Copy";
+    $(this).text("Copied!");
+    setTimeout(() => {
+      $(this).text("Copy");
     }, 3000);
   }, function(error) {
     console.error("copy failed", error);
   });
-}
-
-$(".copy-button").on("click", function() {
-  copyToClipboard(this);
 });
 
 $(".copy-button").on("mouseleave", function() {
