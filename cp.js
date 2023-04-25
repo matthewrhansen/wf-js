@@ -1,17 +1,19 @@
-$(".copy-button").on("click", function() {
-  const snippet = $(this).closest(".code-snippet").find(".snippet").text().trim();
-  const data = JSON.stringify(snippet);
-  navigator.clipboard.writeText(data).then(function() {
-    console.log("copied to clipboard", data);
-    $(this).text("Copied!");
-    setTimeout(() => {
-      $(this).text("Copy");
-    }, 3000);
-  }, function(error) {
-    console.error("copy failed", error);
+$(".copy-button").each(function() {
+  $(this).on("click", function() {
+    let codeSnippet = JSON.parse($(this).parent().find(".snippet").text());
+    console.log("codeSnippet", codeSnippet);
+    let copyButton = $(this);
+    let data = JSON.stringify(codeSnippet);
+    console.log("data", data);
+    document.addEventListener("copy", function(event) {
+      event.clipboardData.setData("application/json", data);
+      event.preventDefault();
+      console.log("copied to cb", data);
+      copyButton.text("Copied to clipboard");
+      setTimeout(function() {
+        copyButton.text("Copy");
+      }, 3000);
+    });
+    document.execCommand("copy");
   });
-});
-
-$(".copy-button").on("mouseleave", function() {
-  $(this).text("Copy");
 });
