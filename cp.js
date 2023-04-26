@@ -6,12 +6,12 @@ $(document).on("click", ".copy-button", function() {
   let copyButton = $(this);
   let data = JSON.stringify(codeSnippet);
   console.log("data", data);
-  
+
   // Reset text of all buttons to "Copy"
   $(".copy-button").text("Copy");
-  
+
   lastClickedButton = copyButton;
-  
+
   copyToClipboard(data, copyButton);
 });
 
@@ -22,9 +22,8 @@ function copyToClipboard(data, copyButton) {
     console.log("copied to cb", data);
     copyButton.text("Copied to clipboard");
     setTimeout(() => {
-      if (copyButton === lastClickedButton) {
-        copyButton.text("Copy");
-      }
+      copyButton.text("Copy");
+      lastClickedButton = undefined; // Reset the last clicked button after 3 seconds
     }, 3000);
   });
   document.execCommand("copy");
