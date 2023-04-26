@@ -7,10 +7,8 @@ $(document).on("click", ".copy-button", function() {
   let data = JSON.stringify(codeSnippet);
   console.log("data", data);
 
-  // Reset text of last clicked button to "Copy"
-  if (lastClickedButton) {
-    lastClickedButton.text("Copy");
-  }
+  // Reset text of all buttons to "Copy"
+  $(".copy-button").text("Copy");
 
   lastClickedButton = copyButton;
 
@@ -23,6 +21,10 @@ function copyToClipboard(data, copyButton) {
     event.preventDefault();
     console.log("copied to cb", data);
     copyButton.text("Copied to clipboard");
+
+    // Reset text of all buttons other than the last clicked button to "Copy"
+    $(".copy-button").not(lastClickedButton).text("Copy");
+
     setTimeout(() => {
       if (lastClickedButton === copyButton) {
         copyButton.text("Copy");
